@@ -1,0 +1,15 @@
+CREATE TABLE Cliente(
+    P_iva VARCHAR(11) NOT NULL,
+    Nome VARCHAR(30) NOT NULL,
+    Tipo VARCHAR(30) NOT NULL,
+    Res_Sede VARCHAR(30) NOT NULL,
+    PRIMARY KEY (P_iva)
+);
+
+CREATE TABLE Servizi(
+    Id INT NOT NULL AUTO_INCREMENT,
+    Nome VARCHAR(30) NOT NULL,
+    Descrizione VARCHAR(150) NOT NULL,
+    Costo INT NOT NULL,
+    PRIMARY KEY(Id)
+);
