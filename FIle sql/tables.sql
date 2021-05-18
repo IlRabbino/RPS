@@ -1,5 +1,5 @@
 CREATE TABLE Cliente(
-    P_iva VARCHAR(11) NOT NULL,
+    P_iva VARCHAR(11) NOT NULL CHECK (LENGTH(P_iva)=11),
     Nome VARCHAR(30) NOT NULL,
     Tipo VARCHAR(30) NOT NULL,
     Res_Sede VARCHAR(30) NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE ServizioAssistenza (
 );
 
 CREATE TABLE RichiestaAssistenza (
-    Cliente VARCHAR(11) NOT NULL,
+    Cliente VARCHAR(11) NOT NULL CHECK (LENGTH(P_iva)=11),
     Data_richiesta DATE NOT NULL,
     Codice_problema INT NOT NULL,
     Risolto BOOLEAN NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE RichiestaAssistenza (
 );
 
 CREATE TABLE Firma(
-    Cliente VARCHAR(11) NOT NULL,
+    Cliente VARCHAR(11) NOT NULL CHECK (LENGTH(P_iva)=11),
     Contratto INT NOT NULL,
     PRIMARY KEY (Cliente, Contratto),
     FOREIGN KEY (Cliente) REFERENCES Cliente (P_iva) ON DELETE CASCADE,
@@ -84,7 +84,7 @@ CREATE TABLE Noleggi (
 );
 
 CREATE TABLE Acquisti (
-    Cliente VARCHAR(11) NOT NULL,
+    Cliente VARCHAR(11) NOT NULL CHECK (LENGTH(P_iva)=11),
     Fotocopiatrice VARCHAR(30) NOT NULL,
     Fattura INT NOT NULL,
     PRIMARY KEY (Cliente, Fotocopiatrice, Fattura),
@@ -102,7 +102,7 @@ CREATE TABLE FattureContrattuali (
 );
 
 CREATE TABLE FattureAssistenza (
-    Cliente VARCHAR(11) NOT NULL,
+    Cliente VARCHAR(11) NOT NULL CHECK (LENGTH(P_iva)=11),
     Data_richiesta DATE NOT NULL,
     Codice_problema INT NOT NULL,
     Fattura INT NOT NULL,
