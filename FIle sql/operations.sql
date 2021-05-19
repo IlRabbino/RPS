@@ -105,3 +105,11 @@ BEGIN
     CLOSE cursor_List;
 END //
 DELIMITER ;
+
+
+--Pagamento di una fattura
+CREATE PROCEDURE PagamentoFattura(IN fattura)
+BEGIN
+    UPDATE Fattura SET Incassata = 1 WHERE Codice = fattura;    
+END //
+DELIMITER ;
