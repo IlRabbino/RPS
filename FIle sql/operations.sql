@@ -1,11 +1,24 @@
 --Aquisto fotocopiatrice
 DELIMITER //
-CREATE PROCEDURE InsertAcquisto(IN modello VARCHAR(30), cliente VARCHAR(11), data_acquisto DATE, prodotto VARCHAR(150))
+CREATE PROCEDURE InsertAcquisto(IN modello VARCHAR(30), cliente VARCHAR(11), data_acquisto DATE)
 BEGIN
     SET @imponibile = (SELECT Costo FROM Fotocopiatrice WHERE Modello = modello);
-    INSERT INTO Fattura VALUES (data_acquisto, @imponibile, cliente, prodotto, 0);
+    INSERT INTO Fattura VALUES (data_acquisto, @imponibile, cliente,'Vendita fotocopiatrice', 0);
     SET @fattura = LAST_INSERT_ID();
     INSERT INTO Acquisti VALUES (cliente, modello, @fattura);
+END //
+DELIMITER ;
+
+--Noleggio fotocopiatrice
+DELIMITER //
+CREATE PROCEDURE InsertNoleggio(IN modello VARCHAR(30), cliente VARCHAR(11), canone INT)
+BEGIN
+    SET @data_ = CURRENT_DATE();
+    SET @data_2 = DATE_ADD(@data_, INTERVAL 1 YEAR);
+    INSERT INTO Contratto VALUES (@data_, @data_2 , canone, 0.005);
+    SET @contratto = LAST_INSERT_ID();
+    INSERT INTO Firma VALUES (cliente, @contratto);
+    INSERT INTO Noleggi(@contratto, modello);
 END //
 DELIMITER ;
 
