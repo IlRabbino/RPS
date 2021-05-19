@@ -41,6 +41,18 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE ResolveRichiestaAssistenza(IN cliente VARCHAR(11), data_richiesta DATE, codice INT)
+BEGIN
+    UPDATE RichiestaAssistenza SET Risolto = 1 WHERE Cliente = cliente AND Data_richiesta = data_richiesta AND Codice_problema = codice;
+    SET @costo = (SELECT Costo FROM ServizioAssistenza WHERE Codice = codice);
+    SET @data_ = CURRENT_DATE();
+    INSERT INTO Fattura VALUES (@data_, @costo, cliente, 'Servizio di assistenza', 0);
+    SET @fattura =  LAST_INSERT_ID();
+    INSERT INTO FattureAssistenza VALUES (cliente, @data_, codice, fattura);
+END //
+DELIMITER ;
+
 --Conteggio mensile del fatturato
 DELIMITER //
 CREATE PROCEDURE ConteggioFatturato(OUT fatturato INT)
