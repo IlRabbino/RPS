@@ -1,13 +1,13 @@
 --Aquisto fotocopiatrice
-/*DELIMITER //
-CREATE PROCEDURE InsertAcquisto(IN modello VARCHAR(30), cliente VARCHAR(11), data_acquisto DATE, prodotto VARCHAR(150), imponibile INT)
+DELIMITER //
+CREATE PROCEDURE InsertAcquisto(IN modello VARCHAR(30), cliente VARCHAR(11), data_acquisto DATE, prodotto VARCHAR(150))
 BEGIN
-    SET imponibile := SELECT Costo FROM Fotocopiatrice WHERE Modello = modello
-    INSERT INTO Fattura VALUES (data_acquisto, imponibile, cliente, prodotto, 0);
-    SET fattura = LAST_INSERT_ID();
-    INSERT INTO Acquisti VALUES (cliente, modello, fattura);
+    SET @imponibile = (SELECT Costo FROM Fotocopiatrice WHERE Modello = modello);
+    INSERT INTO Fattura VALUES (data_acquisto, @imponibile, cliente, prodotto, 0);
+    SET @fattura = LAST_INSERT_ID();
+    INSERT INTO Acquisti VALUES (cliente, modello, @fattura);
 END //
-DELIMITER ;*/
+DELIMITER ;
 
 --Inserimento di un nuovo modello di fotocopiatrice
 DELIMITER //
@@ -41,6 +41,7 @@ BEGIN
 END //
 DELIMITER ;
 
+--Risoluzione di una richiesta di assistenza
 DELIMITER //
 CREATE PROCEDURE ResolveRichiestaAssistenza(IN cliente VARCHAR(11), data_richiesta DATE, codice INT)
 BEGIN
