@@ -13,12 +13,12 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE InsertNoleggio(IN modello VARCHAR(30), cliente VARCHAR(11), canone INT)
 BEGIN
-    SET @data_ = CURRENT_DATE();
-    SET @data_2 = DATE_ADD(@data_, INTERVAL 1 YEAR);
-    INSERT INTO Contratto VALUES (@data_, @data_2 , canone, 0.005);
-    SET @contratto = LAST_INSERT_ID();
-    INSERT INTO Firma VALUES (cliente, @contratto);
-    INSERT INTO Noleggi(@contratto, modello);
+    SET @data_inizio = CURRENT_DATE();
+    SET @data_fine = DATE_ADD(@data_, INTERVAL 1 YEAR);
+    INSERT INTO Contratto VALUES (@data_inizio, @data_fine , canone, 0.005);
+    SET @contrattoID = LAST_INSERT_ID();
+    INSERT INTO Firma VALUES (cliente, @contrattoID);
+    INSERT INTO Noleggi VALUES (@contrattoID, modello);
 END //
 DELIMITER ;
 
