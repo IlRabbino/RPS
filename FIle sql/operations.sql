@@ -108,6 +108,7 @@ DELIMITER ;
 
 
 --Pagamento di una fattura
+DELIMITER //
 CREATE PROCEDURE PagamentoFattura(IN fattura)
 BEGIN
     UPDATE Fattura SET Incassata = 1 WHERE Codice = fattura;    
