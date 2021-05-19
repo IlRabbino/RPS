@@ -60,3 +60,34 @@ BEGIN
     SELECT SUM(Imponibile) FROM Fattura WHERE Incassata = 1 AND MONTH(Data_emissione) = MONTH(CURRENT_DATE()) AND YEAR(Data_emissione) = YEAR(CURRENT_DATE());
 END //
 DELIMITER ;
+
+--Generazione mensile delle fatture derivate dai contratti di noleggio
+DELIMITER //
+CREATE PROCEDURE FatturazioneContratti()
+BEGIN
+
+    DECLARE cursor_List_isdone BOOLEAN DEFAULT FALSE;
+    DECLARE costo INT;
+    DECLARE cliente VARCHAR(11) DEFAULT '';
+    
+    DECLARE cursor_List CURSOR FOR 
+        SELECT Cliente, Canone
+        FROM Contratto JOIN Firma ON Id = Contratto
+        WHERE Data_scadenza>CURRENT_DATE();
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET cursor_List_isdone = TRUE;
+
+    OPEN cursor_List;
+
+    loop_List: LOOP
+        FETCH cursor_List INTO cliente, costo;
+        IF cursor_List_isdone THEN
+            LEAVE loop_List;
+        END IF;
+
+        INSERT INTO Fattura VALUES (CURRENT_DATE(), costo, cliente, 'Fatturazione mensile noleggio', 0);
+    END LOOP loop_List;
+
+    CLOSE cursor_List;
+END //
+DELIMITER ;
