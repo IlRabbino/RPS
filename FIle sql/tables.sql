@@ -1,7 +1,7 @@
 CREATE TABLE Cliente(
     P_iva VARCHAR(11) NOT NULL CHECK (LENGTH(P_iva)=11),
     Nome VARCHAR(30) NOT NULL,
-    Tipo VARCHAR(30) NOT NULL,
+    Tipo VARCHAR(10) NOT NULL CHECK (Tipo = 'azienda' OR Tipo = 'persona'),
     Res_Sede VARCHAR(30) NOT NULL,
     PRIMARY KEY (P_iva)
 );
@@ -36,7 +36,7 @@ CREATE TABLE Fattura(
     Data_emissione DATE NOT NULL,
     Imponibile INT NOT NULL,
     Emessa_per VARCHAR(11) NOT NULL,
-    Servizio VARCHAR(150) NOT NULL,
+    Prodotto VARCHAR(150) NOT NULL,
     Incassata BOOLEAN NOT NULL,
     PRIMARY KEY (Codice),
     FOREIGN KEY (Emessa_per) REFERENCES Cliente (P_iva) ON DELETE CASCADE
