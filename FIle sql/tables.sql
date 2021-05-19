@@ -19,7 +19,7 @@ CREATE TABLE Contratto(
     Data_firma DATE NOT NULL,
     Data_scadenza DATE NOT NULL,
     Canone INT NOT NULL,
-    Costo_pagina_extra INT,
+    Costo_pagina_extra FLOAT,
     PRIMARY KEY (Id)
 );
 
