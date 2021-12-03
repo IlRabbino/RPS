@@ -1,6 +1,9 @@
 # RPS
 
-Progetto universitario per l'esame di Basi di Dati 
+Project for my database exams at University of Catania
 
-Per creare le tabelle in un database MySql basterà importare il file tables.sql<br>
-Per implementare le procedure invece si dovrà importare il file operations.sql
+Design of conceptual and logical model and sql implementation of a database.
+
+To create table in MySql db you have to import tables.sql<br>
+
+To implement the procedures you have to import operations.sql
